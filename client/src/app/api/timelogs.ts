@@ -6,6 +6,28 @@ export  const getTimelogsByProjectId= async (id :number | null): Promise<TimeLog
     return data as TimeLog[];
 }
 
+// add a fucntion to create a new timelog   
+export async function createTimeLog(project : NewTimeLog) {
+    const response = await fetch(`${BASE_URL}/Timelogs`, {
+        method: "POST",
+        headers: {
+            "content-type": "application/json",
+        },
+        body: JSON.stringify(project),
+    });
+    console.log(response);
+    return response.ok;
+}
+
+
+
+export interface NewTimeLog {
+    comment: string;
+    logDate: Date;
+    logTimeInMinutes: number;
+    projectId: number;
+}
+
 export interface TimeLog {
     id: number;
     comment: string;

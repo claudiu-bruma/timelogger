@@ -1,19 +1,28 @@
 import React, { useState, useEffect } from 'react';
 // import Table from "../components/Table";
 import {getTimelogsByProjectId,TimeLog} from "../api/timelogs";   
+import  TimelogsForm from './AddTimeLog';
 
 interface TimeLogsProps {
     projectId: number | null;
 }
 export default function TimeLogs({ projectId }: TimeLogsProps){
-    const [timelogs, setTimelogs] = useState<TimeLog[]>([]);
+    const [timelogs, setTimelogs] = useState<TimeLog[]>([]); 
+    const [showModal, setShowModal] = useState<boolean>(false);
+    const fetchTimeLogs = async () => {
+        const logs = await getTimelogsByProjectId(projectId);
+        setTimelogs(logs);
+    }
+
+
+    const closeModal = async  ()=>{
+        setShowModal(false);
+        fetchTimeLogs();
+  }
 
     useEffect(() => {
         if (projectId !== null) {
-            async function fetchTimeLogs() {
-                const logs = await getTimelogsByProjectId(projectId);
-                setTimelogs(logs);
-            }
+ 
             fetchTimeLogs();
         }
     }, [projectId]);
@@ -22,7 +31,17 @@ export default function TimeLogs({ projectId }: TimeLogsProps){
         return null; // Or return some placeholder if desired.
     }
     return (
-        <>
+        <div> 
+
+                <div className="w-1/2">
+                    <button onClick={() => setShowModal(true)} className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+                        Add entry
+                    </button>
+                </div>
+                {showModal && (
+                    <TimelogsForm projectId={projectId} onClose={() => closeModal()} />
+                )} 
+
             <table className="table-fixed w-full">
             <thead className="bg-gray-200">
                 <tr>
@@ -45,6 +64,6 @@ export default function TimeLogs({ projectId }: TimeLogsProps){
                 ))} 
             </tbody>
         </table>             
-        </>
+        </div>
     );
 }
