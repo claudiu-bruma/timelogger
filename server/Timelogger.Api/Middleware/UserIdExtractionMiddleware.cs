@@ -1,6 +1,5 @@
 ﻿using Microsoft.AspNetCore.Http;
 using System.Threading.Tasks;
-using System;
 using Timelogger.Core.Interfaces;
 
 namespace Timelogger.Api.Middleware

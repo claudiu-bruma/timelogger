@@ -3,11 +3,10 @@ using Moq;
 using NUnit.Framework;
 using System;
 using System.Collections.Generic;
-using System.Text;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using FluentAssertions;
-using NUnit.Framework.Constraints;
 using Timelogger.Core.DTOs;
 using Timelogger.Core.Entities;
 using Timelogger.Core.Interfaces;
@@ -172,7 +171,7 @@ namespace Timelogger.Core.Tests.Services
                         x.GetLogsByProjectId(projectid, CancellationToken.None))
                 .ReturnsAsync(new List<TimeLog>(){ timeLogs});
             // Act 
-            var timeLogDtos = await _timeLogService.GetLogsByProjectId(projectid, CancellationToken.None);
+            var timeLogDtos = (await _timeLogService.GetLogsByProjectId(projectid, CancellationToken.None)).ToList();
 
             // Assert
             timeLogDtos.Should().NotBeEmpty();

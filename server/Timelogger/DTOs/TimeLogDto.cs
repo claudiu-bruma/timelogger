@@ -1,5 +1,4 @@
 ﻿using System;
-using Timelogger.Core.Entities;
 
 namespace Timelogger.Core.DTOs
 {

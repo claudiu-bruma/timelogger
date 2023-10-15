@@ -1,12 +1,8 @@
-﻿using System.Linq;
-using System.Threading;
+﻿using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Localization.Internal;
 using Timelogger.Core.DTOs;
-using Timelogger.Core.Entities;
 using Timelogger.Core.Interfaces;
-using Timelogger.Infrastructure.DbContext;
 
 namespace Timelogger.Api.Controllers
 {
