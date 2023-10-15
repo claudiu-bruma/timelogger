@@ -13,7 +13,7 @@ export  const getProjectById= async (id :number): Promise<Project[]> => {
     return data as Project[];
 }
 // add a fucntion to create a new project   
-export async function createProject(project : Project) {
+export async function createProject(project : NewProject) {
     const response = await fetch(`${BASE_URL}/projects`, {
         method: "POST",
         headers: {
@@ -21,12 +21,20 @@ export async function createProject(project : Project) {
         },
         body: JSON.stringify(project),
     });
-    return response.json();
+    console.log(response);
+    return response.ok;
 }
 
 //define a new typescipt object project with id, name, description, and completed
 export interface Project {
     id: number;
+    name: string;
+    deadline: Date;
+    isCompleted: boolean;
+}
+
+
+export interface NewProject { 
     name: string;
     deadline: Date;
     isCompleted: boolean;

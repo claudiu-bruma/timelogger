@@ -65,6 +65,7 @@ namespace Timelogger.Core.Services
 
             return timeLogs.Select(x=>new TimeLogDto()
             {
+                Id = x.Id,
                 Comment = x.Comment,
                 LogDate = x.LogDate,
                 LogTimeInMinutes = x.LogTimeInMinutes,
