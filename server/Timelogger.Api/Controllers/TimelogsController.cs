@@ -30,11 +30,7 @@ namespace Timelogger.Api.Controllers
             {
                 return BadRequest();
             }
-
-            if (timeLog.ProjectId < 0 || timeLog.LogTimeInMinutes < 0  )
-            {
-                return BadRequest();
-            }   
+            
             await _timeLogService.AddTimeLog(timeLog, cancellationToken);
             return Ok();
         }
