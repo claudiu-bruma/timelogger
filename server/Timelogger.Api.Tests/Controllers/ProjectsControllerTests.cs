@@ -26,15 +26,7 @@ namespace Timelogger.Api.Tests.Controllers
             _projectsController = new ProjectsController(_projectsServiceMock.Object);
             _fixture = new Fixture();
         }
-        [Test]
-        public void HelloWorld_ShouldReply_HelloBack()
-        {
-            ProjectsController sut = new ProjectsController(null);
-
-            string actual = sut.HelloWorld();
-
-            Assert.AreEqual("Hello Back!", actual);
-        }
+ 
         [Test]
         public async Task GetAllProjects_ShouldReturn_AllProjects()
         {

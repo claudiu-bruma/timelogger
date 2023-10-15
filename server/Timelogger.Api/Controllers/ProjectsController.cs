@@ -15,14 +15,7 @@ namespace Timelogger.Api.Controllers
         {
             _projectsService = projectsService;
         }
-
-        [HttpGet]
-        [Route("hello-world")]
-        public string HelloWorld()
-        {
-            return "Hello Back!";
-        }
-
+         
         // GET api/projects
         [HttpGet]
         //route get all projects    
