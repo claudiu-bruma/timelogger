@@ -12,5 +12,7 @@ namespace Timelogger.Core.Entities
 		public ICollection<TimeLog> TimeLogs { get; set; }
 		public bool IsCompleted { get; set; }
 
+		public int UserId { get; set; }
+
 	}
 }

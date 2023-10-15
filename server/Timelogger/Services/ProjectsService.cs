@@ -11,11 +11,11 @@ namespace Timelogger.Core.Services
 {
     public class ProjectsService : IProjectsService
     {
-        private readonly IProjectRepository _projectRepository;
+        private readonly IProjectRepository _projectRepository; 
 
-        public ProjectsService(IProjectRepository projectRepository)
+        public ProjectsService(IProjectRepository projectRepository )
         {
-            _projectRepository = projectRepository;
+            _projectRepository = projectRepository; 
         }
 
         public async Task AddProject(AddProjectDto project, CancellationToken cancellationToken)

@@ -12,12 +12,12 @@ namespace Timelogger.Core.Services
     public class TimeLogService : ITimeLogService
     {
         private readonly ITimeLogRepository _timeLogRepository;
-        private readonly IProjectRepository _projectRepository;
+        private readonly IProjectRepository _projectRepository; 
 
-        public TimeLogService(ITimeLogRepository timeLogRepository, IProjectRepository projectRepository)
+        public TimeLogService(ITimeLogRepository timeLogRepository, IProjectRepository projectRepository  )
         {
             _timeLogRepository = timeLogRepository;
-            _projectRepository = projectRepository;
+            _projectRepository = projectRepository; 
         }
 
         public async Task AddTimeLog(AddTimeLogDto timeLog, CancellationToken cancellationToken)

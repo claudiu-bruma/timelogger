@@ -6,9 +6,11 @@ using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Hosting; 
 using Timelogger.Core.Interfaces;
 using Timelogger.Core.Services;
+using Timelogger.Infrastructure.Authentication;
 using Timelogger.Infrastructure.DbContext;
 using Timelogger.Infrastructure.Configuration;
 using Timelogger.Infrastructure.Repositories;
+using Timelogger.Api.Middleware;
 
 namespace Timelogger.Api
 {
@@ -45,6 +47,7 @@ namespace Timelogger.Api
             services.AddScoped<ITimeLoggerDbContext, TimeLoggerDbContext>();
             services.AddScoped<IProjectRepository, ProjectRepository>();
             services.AddScoped<ITimeLogRepository, TimeLogRepository>();
+            services.AddScoped<IIdentityService, IdentityService>();
 
             services.AddMvc(options => options.EnableEndpointRouting = false);
             services.ConfigureSwaggerServices();
@@ -61,6 +64,10 @@ namespace Timelogger.Api
                     .SetIsOriginAllowed(origin => true)
                     .AllowCredentials());
             }
+
+            app.UseMiddleware<UserIdExtractionMiddleware>();
+            app.UseMiddleware<ExceptionHandlingMiddleware>();
+
 
             app.UseMvc();
             app.UseSwagger();

@@ -9,5 +9,7 @@ namespace Timelogger.Core.Entities
         public int LogTimeInMinutes { get; set; }
         public DateTime LogDate { get; set; }
         public Project Project { get; set; }
+
+        public int UserId { get; set; }
     }
 }
