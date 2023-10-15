@@ -42,6 +42,10 @@ namespace Timelogger.Api.Middleware
                     statusCode = (int)HttpStatusCode.BadRequest;
                     responseMessage =ax.Message;
                     break;
+                case InvalidOperationException iex:
+                    statusCode = (int) HttpStatusCode.Locked;
+                    responseMessage = iex.Message;
+                    break;
             }
 
             return context.Response.WriteAsync(new

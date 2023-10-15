@@ -22,7 +22,7 @@ namespace Timelogger.Core.Services
 
         public async Task AddTimeLog(AddTimeLogDto timeLog, CancellationToken cancellationToken)
         {
-            if (timeLog.ProjectId is null || timeLog.ProjectId == 0)
+            if (timeLog.ProjectId is null || timeLog.ProjectId <= 0)
             {
                 throw new ArgumentNullException(nameof(timeLog.ProjectId), "ProjectId is null or invalid");
             }
