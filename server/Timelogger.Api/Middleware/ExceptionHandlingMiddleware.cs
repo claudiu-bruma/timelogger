@@ -2,6 +2,7 @@
 using System.Net;
 using System.Threading.Tasks;
 using System;
+using System.Text.Json;
 
 namespace Timelogger.Api.Middleware
 {
@@ -26,7 +27,7 @@ namespace Timelogger.Api.Middleware
             }
         }
 
-        private Task HandleExceptionAsync(HttpContext context, Exception exception)
+        private async Task HandleExceptionAsync(HttpContext context, Exception exception)
         {
             int statusCode = (int)HttpStatusCode.InternalServerError;
             string responseMessage = "Something went wrong with your request";
@@ -48,11 +49,8 @@ namespace Timelogger.Api.Middleware
                     break;
             }
 
-            return context.Response.WriteAsync(new
-            {
-                StatusCode = statusCode,
-                Message = responseMessage
-            }.ToString());
+            context.Response.StatusCode = statusCode;
+            await context.Response.WriteAsync(responseMessage);
         }
     }
 }
