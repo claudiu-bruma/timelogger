@@ -10,6 +10,7 @@ export default function Projects() {
     const [projects, setProjects] = useState<Project[]>([]);
     const [selectedProjectId, setSelectedProjectId] = useState<number | null>(null);
     const [showProjectModal, setShowProjectModal] = useState<boolean>(false);
+    const [sortOrder, setSortOrder] = useState<string>("asc");
     const closeModal = async  (projectId : number)=>{
             setSelectedProjectId(projectId);
             fetchProjects();
@@ -18,6 +19,20 @@ export default function Projects() {
          setShowProjectModal(false);
           fetchProjects();
    }
+   const sortProjects = async  ()=>{
+        const result = await getAll();
+        if(sortOrder === "desc"){
+            const sortedProjects =  result.sort((a, b) => (a.deadline > b.deadline) ? 1 : -1)
+            setProjects(sortedProjects);
+            setSortOrder("asc");
+        }
+        else{
+            const sortedProjects =  result.sort((a, b) => (a.deadline < b.deadline) ? 1 : -1)
+            setProjects(sortedProjects);
+            setSortOrder("desc");
+        }
+    
+}
 
     const fetchProjects = async () => {
         const result = await getAll();
@@ -71,7 +86,7 @@ export default function Projects() {
             <thead className="bg-gray-200">
                 <tr> 
                     <th className="border px-4 py-2">Project Name</th>
-                    <th className="border px-4 py-2">Deadline</th>
+                    <th className="border px-4 py-2 hover:cursor-pointer" onClick={()=>sortProjects() }>Deadline</th>
                     <th className="border px-4 py-2">Is Project Completed</th>
                     <th className="border px-4 py-2">Action</th>
                 </tr>
