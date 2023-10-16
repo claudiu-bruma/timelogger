@@ -1,8 +1,10 @@
-import React, { useState, useEffect } from 'react';
-// import Table from "../components/Table";
-import {getAll,Project} from "../api/projects";  
+import React, { useState, useEffect } from 'react'; 
+import {getAll} from "../api/projects";  
+import { Project } from "../models/Project";
 import Timelogs from './TimeLogs';
 import AddProject from './AddProject';
+import Modal from "../components/Modal";
+
 
 export default function Projects() {
     const [projects, setProjects] = useState<Project[]>([]);
@@ -19,7 +21,8 @@ export default function Projects() {
 
     const fetchProjects = async () => {
         const result = await getAll();
-        setProjects(result);
+        const sortedProjects =  result.sort((a, b) => (a.deadline > b.deadline) ? 1 : -1)
+        setProjects(sortedProjects);
     }
 
     useEffect(() => { 
@@ -28,11 +31,8 @@ export default function Projects() {
 
     if (selectedProjectId) {
         return (
-            <div className="flex items-center my-6">
-                <div className="w-1/2"> 
-                    <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" onClick={() => setSelectedProjectId(null)}>Back</button>
-                </div>                
-                <Timelogs projectId={selectedProjectId} />
+            <div className="flex items-center my-6">   
+                <Timelogs projectId={selectedProjectId} onClose={()=> setSelectedProjectId(null)} />
             </div>
         );
     }
@@ -45,9 +45,9 @@ export default function Projects() {
                         Add entry
                     </button>
                 </div>
-                {showProjectModal && (
+                <Modal isOpen={showProjectModal} onClose={() => closeAddProjectModal()} title="Add Project">
                     <AddProject onClose={() => closeAddProjectModal()} />
-                )}
+                </Modal> 
                 <div className="w-1/2 flex justify-end">
                     <form>
                         <input
@@ -69,8 +69,7 @@ export default function Projects() {
 
             <table className="table-fixed w-full">
             <thead className="bg-gray-200">
-                <tr>
-                    <th className="border px-4 py-2 w-12">Id</th>
+                <tr> 
                     <th className="border px-4 py-2">Project Name</th>
                     <th className="border px-4 py-2">Deadline</th>
                     <th className="border px-4 py-2">Is Project Completed</th>
@@ -81,8 +80,7 @@ export default function Projects() {
 
 
             {projects.map(project => (
-                 <tr key = {project.id}>
-                    <td className="border px-4 py-2 w-12">{project.id}</td>
+                 <tr key = {project.id}> 
                     <td className="border px-4 py-2">{project.name}</td>
                     <td className="border px-4 py-2">{project.deadline}</td>                    
                     <td className="border px-4 py-2"><input type="checkbox" disabled  checked={project.isCompleted}></input></td>
@@ -94,9 +92,7 @@ export default function Projects() {
                  </tr>                    
                 ))} 
             </tbody>
-        </table> 
-        {/* <Timelogs projectId={selectedProjectId} />
-        <AddProject/> */}
+        </table>  
         </>
     );
 }

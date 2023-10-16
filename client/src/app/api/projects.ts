@@ -1,9 +1,11 @@
+import { NewProject } from "../models/NewProject";
+import { Project } from "../models/Project";
+
 const BASE_URL = "http://localhost:3001/api";
 
 export  const getAll= async (): Promise<Project[]> => {
     const response = await fetch(`${BASE_URL}/projects`);
-    const data = await response.json();
-    console.log(data);
+    const data = await response.json(); 
     return data as Project[];
 }
 // add another function for getting a signle project
@@ -20,22 +22,8 @@ export async function createProject(project : NewProject) {
             "content-type": "application/json",
         },
         body: JSON.stringify(project),
-    });
-    console.log(response);
+    }); 
     return response.ok;
 }
 
-//define a new typescipt object project with id, name, description, and completed
-export interface Project {
-    id: number;
-    name: string;
-    deadline: Date;
-    isCompleted: boolean;
-}
 
-
-export interface NewProject { 
-    name: string;
-    deadline: Date;
-    isCompleted: boolean;
-}

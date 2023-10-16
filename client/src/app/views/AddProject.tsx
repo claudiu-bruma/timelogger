@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
-import { createProject, NewProject } from "../api/projects";  
+import { createProject } from "../api/projects";  
+import { NewProject } from "../models/NewProject";
+
 
 export default function ProjectForm({ onClose }: AddProjectProps) {
     const [name, setName] = useState<string>('');
@@ -22,32 +24,55 @@ export default function ProjectForm({ onClose }: AddProjectProps) {
     };
 
     return (
-        <div className="modal flex items-center my-6">
-            <form id="addProjectForm"  onSubmit={handleSubmit}>
-                <div>
-                    <label>
-                        Project Name:
-                        <input value={name} onChange={e => setName(e.target.value)} />
-                    </label>
-                </div>
-                <div>
-                    <label>
-                        Deadline:
-                     <input type="date" onChange={e => setDeadline(new Date(e.target.value))} />
-                    </label>
-                </div>
-                <div>
-                     <label>
-                     Completed:
-                     <input type="checkbox" checked={isCompleted} onChange={e => setIsCompleted(e.target.checked)} />
-                </label> 
-                </div>
-                <div>       
-                     <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"  type="submit">Save</button>        
-                     <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" onClick={onClose}>Close</button>     
-                </div>
-            </form>
+         
+        <form id="addProjectForm" onSubmit={handleSubmit} className="space-y-4">
+        <div className="flex flex-col">
+            <label htmlFor="projectName" className="mb-2 font-medium">Project Name:</label>
+            <input 
+                id="projectName"
+                value={name} 
+                onChange={e => setName(e.target.value)} 
+                className="p-2 border rounded-md"
+            />
         </div>
+    
+        <div className="flex flex-col">
+            <label htmlFor="deadline" className="mb-2 font-medium">Deadline:</label>
+            <input 
+                id="deadline"
+                type="date" 
+                onChange={e => setDeadline(new Date(e.target.value))} 
+                className="p-2 border rounded-md"
+            />
+        </div>
+    
+        <div className="flex items-center space-x-2">
+           <label htmlFor="completed" className="font-medium">Completed:</label> 
+           <input 
+                id="completed"
+                type="checkbox" 
+                checked={isCompleted} 
+                onChange={e => setIsCompleted(e.target.checked)} 
+                className="mr-2"
+            />
+            
+        </div>
+    
+        <div className="flex space-x-2">       
+            <button 
+                className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"  
+                type="submit"
+            >
+                Save
+            </button>        
+            <button 
+                className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" 
+                onClick={onClose}
+            >
+                Close
+            </button>     
+        </div>
+    </form>
     );
 }
 
